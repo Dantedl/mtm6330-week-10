@@ -42,4 +42,58 @@ $('#yourName').val('Bob Builder')
 // $('img').addClass('special')
 $('img').toggleClass('special')
 
+// events
+/**
+ * 
+*$('img').click(function() 
+*do something on click
+ */
+$('img').click(function(){
+  console.log($(this).attr('src'))
+  $(this).toggleClass('special')
+})
+$('img').click(function(){
+  console.log($(this).attr('src','./img/image-5.jpg','.img'))
+  $(this).toggleClass('special')
+})
+
+/**ajax */
+
+// $('#content').load('./about.html')
+// $('#contentNav .nav-link').click(function(e){
+// e.preventDefault()
+// var page= $(this).attr('href')
+// $('#content').load(page)
+// })
+
+$('#content').load('./about.html')
+$('#contentNav .nav-link').click(function(e){
+e.preventDefault()
+var page= $(this).attr('href')
+$('.active').removeClass('active')
+$(this).addClass('active')
+$('#content').fadeOut(500, function(){
+  $(this).load(page)
+}).fadeIn(500)
+
+})
+/**using local JSON file with AJAX */
+$.ajax({
+  url:'data/posts.json',
+  type: 'GET',
+  dataType:'json'
+}).done(function(data){
+  // var post = JSON.parse(data)
+  console.log(data)
+  var numPost = data.posts.lenght
+  for(var i = 0; i<numPost; i++){
+    var post =   '<div class="col-sm-6 p-5">';
+    post +=(i+1)+'.'+data.posts[i].Title
+    post += '</h3></p>'
+    post+= data.posts[i].body
+    post+= '</p></div>'
+    $('#posts').append(pots)
+  }
+})
+
 })
